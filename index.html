@@ -3,243 +3,1129 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>SEO Weekly Reports</title>
+  <title>QuickBooks Search Dashboard</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
   <style>
-    * { box-sizing: border-box; margin: 0; padding: 0; }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --brand-green:  #2da44e;
+      --brand-dark:   #1a1a2e;
+      --bg:           #f0f2f5;
+      --card-bg:      #ffffff;
+      --border:       #e2e6ea;
+      --text:         #1a1a1a;
+      --text-muted:   #6c757d;
+      --positive:     #198754;
+      --negative:     #dc3545;
+      --neutral:      #6c757d;
+      --ppc-en:       #4361ee;
+      --ppc-fr:       #f77f00;
+      --seo:          #2da44e;
+      --holistic:     #9b59b6;
+      --seo-accts:    #17a2b8;
+    }
 
     body {
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-      background: #f5f5f5;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+    }
+
+    /* ── Nav ── */
+    .navbar {
+      background: var(--brand-dark);
       display: flex;
       align-items: center;
-      justify-content: center;
-      min-height: 100vh;
-      padding: 24px;
+      padding: 0 24px;
+      height: 56px;
+      gap: 4px;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.3);
     }
 
-    .card {
-      background: white;
-      border-radius: 12px;
-      padding: 48px 40px;
-      max-width: 520px;
-      width: 100%;
-      text-align: center;
-      box-shadow: 0 2px 12px rgba(0,0,0,0.08);
-    }
-
-    .logo {
+    .navbar-brand {
       font-size: 13px;
-      font-weight: 600;
+      font-weight: 700;
       letter-spacing: 0.08em;
       text-transform: uppercase;
-      color: #999;
-      margin-bottom: 8px;
+      color: #fff;
+      opacity: 0.7;
+      margin-right: 20px;
+      white-space: nowrap;
     }
 
-    h1 {
-      font-size: 24px;
-      font-weight: 700;
-      color: #1a1a1a;
-      margin-bottom: 8px;
+    .nav-tabs {
+      display: flex;
+      gap: 2px;
+      flex: 1;
     }
 
-    .subtitle {
-      font-size: 14px;
-      color: #888;
-      margin-bottom: 40px;
-      line-height: 1.5;
-    }
-
-    .report-block {
-      text-align: left;
-      margin-bottom: 28px;
-    }
-
-    .report-block h2 {
-      font-size: 15px;
-      font-weight: 700;
-      color: #1a1a1a;
-      margin-bottom: 4px;
-    }
-
-    .report-block p {
-      font-size: 13px;
-      color: #888;
-      margin-bottom: 12px;
-      line-height: 1.5;
-    }
-
-    button {
+    .nav-tab {
+      background: none;
       border: none;
-      border-radius: 8px;
-      padding: 12px 24px;
-      font-size: 15px;
+      color: rgba(255,255,255,0.6);
+      font-size: 14px;
+      font-weight: 500;
+      padding: 0 16px;
+      height: 56px;
+      cursor: pointer;
+      border-bottom: 3px solid transparent;
+      transition: color 0.15s, border-color 0.15s;
+      white-space: nowrap;
+    }
+
+    .nav-tab:hover { color: #fff; }
+
+    .nav-tab.active {
+      color: #fff;
+      border-bottom-color: var(--brand-green);
+    }
+
+    .navbar-right {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-left: auto;
+    }
+
+    .last-updated {
+      font-size: 12px;
+      color: rgba(255,255,255,0.45);
+      white-space: nowrap;
+    }
+
+    .btn-run {
+      background: var(--brand-green);
+      color: #fff;
+      border: none;
+      border-radius: 6px;
+      padding: 7px 16px;
+      font-size: 13px;
       font-weight: 600;
       cursor: pointer;
-      width: 100%;
       transition: background 0.15s;
+      white-space: nowrap;
     }
 
-    button.active {
-      background: #2da44e;
-      color: white;
+    .btn-run:hover:not(:disabled) { background: #238a3e; }
+    .btn-run:disabled { background: #aaa; cursor: not-allowed; }
+
+    /* ── Layout ── */
+    .content {
+      padding: 24px;
+      max-width: 1300px;
+      margin: 0 auto;
     }
 
-    button.active:hover:not(:disabled) { background: #218f3e; }
-    button.active:disabled { background: #aaa; cursor: not-allowed; }
+    .tab-panel { display: none; }
+    .tab-panel.active { display: block; }
 
-    button.coming-soon {
-      background: #f0f0f0;
-      color: #aaa;
-      cursor: not-allowed;
+    /* ── Cards ── */
+    .card {
+      background: var(--card-bg);
+      border-radius: 10px;
+      padding: 20px 24px;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.07);
     }
 
-    .status {
-      margin-top: 10px;
-      font-size: 13px;
-      min-height: 18px;
-      color: #555;
-      text-align: left;
-    }
-
-    .status.success { color: #2da44e; font-weight: 600; }
-    .status.error   { color: #d73a49; font-weight: 600; }
-
-    .badge {
-      display: inline-block;
-      background: #f0f0f0;
-      color: #aaa;
+    .card-title {
       font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 14px;
+    }
+
+    /* ── KPI Cards grid ── */
+    .kpi-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+      gap: 16px;
+      margin-bottom: 20px;
+    }
+
+    .kpi-card {
+      background: var(--card-bg);
+      border-radius: 10px;
+      padding: 18px 20px;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.07);
+      border-top: 3px solid var(--border);
+    }
+
+    .kpi-card.ppc-en  { border-top-color: var(--ppc-en); }
+    .kpi-card.ppc-fr  { border-top-color: var(--ppc-fr); }
+    .kpi-card.seo-qb  { border-top-color: var(--seo); }
+    .kpi-card.adobe   { border-top-color: var(--holistic); }
+    .kpi-card.seo-ac  { border-top-color: var(--seo-accts); }
+
+    .kpi-label {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 6px;
+    }
+
+    .kpi-value {
+      font-size: 30px;
+      font-weight: 700;
+      line-height: 1;
+      margin-bottom: 8px;
+    }
+
+    .kpi-deltas {
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+    }
+
+    .delta {
+      font-size: 12px;
       font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .delta-label { font-weight: 400; color: var(--text-muted); }
+    .delta.up    { color: var(--positive); }
+    .delta.down  { color: var(--negative); }
+    .delta.flat  { color: var(--neutral); }
+
+    /* ── Charts ── */
+    .chart-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin-bottom: 20px;
+    }
+
+    .chart-row.single { grid-template-columns: 1fr; }
+
+    .chart-container {
+      position: relative;
+      height: 240px;
+    }
+
+    /* ── Tables ── */
+    .table-wrap {
+      overflow-x: auto;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13px;
+    }
+
+    th {
+      text-align: left;
+      font-size: 11px;
+      font-weight: 700;
       letter-spacing: 0.05em;
       text-transform: uppercase;
-      border-radius: 4px;
-      padding: 2px 7px;
-      margin-left: 8px;
-      vertical-align: middle;
+      color: var(--text-muted);
+      padding: 8px 12px;
+      border-bottom: 2px solid var(--border);
+      white-space: nowrap;
     }
 
-    .divider {
-      border: none;
-      border-top: 1px solid #eee;
-      margin: 8px 0 28px;
+    td {
+      padding: 8px 12px;
+      border-bottom: 1px solid var(--border);
+      white-space: nowrap;
     }
 
-    .sheet-links {
+    tr:last-child td { border-bottom: none; }
+
+    tr.total-row td {
+      font-weight: 700;
+      background: #f8f9fa;
+    }
+
+    .td-delta { font-weight: 600; font-size: 12px; }
+    .td-up    { color: var(--positive); }
+    .td-down  { color: var(--negative); }
+    .td-flat  { color: var(--neutral); }
+
+    /* ── Volume box ── */
+    .volume-box {
+      background: #fffbf0;
+      border: 1px solid #ffe89a;
+      border-radius: 10px;
+      padding: 18px 22px;
+      margin-bottom: 20px;
       display: flex;
-      gap: 16px;
-      justify-content: center;
+      align-items: flex-start;
+      gap: 24px;
       flex-wrap: wrap;
-      margin-top: 8px;
     }
 
-    .sheet-link {
+    .volume-input-group {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-shrink: 0;
+    }
+
+    .volume-input-group label {
       font-size: 13px;
-      color: #0969da;
-      text-decoration: none;
-    }
-
-    .sheet-link:hover { text-decoration: underline; }
-    .sheet-link.disabled { color: #bbb; pointer-events: none; }
-
-    .sheet-section-label {
-      font-size: 12px;
-      color: #bbb;
-      text-transform: uppercase;
-      letter-spacing: 0.07em;
       font-weight: 600;
-      margin-bottom: 10px;
+      color: #7a5a00;
+      white-space: nowrap;
     }
+
+    .volume-input {
+      width: 90px;
+      border: 1px solid #ffe89a;
+      border-radius: 6px;
+      padding: 7px 10px;
+      font-size: 14px;
+      font-weight: 700;
+      text-align: center;
+      background: #fff;
+    }
+
+    .volume-input:focus { outline: 2px solid #f0b400; border-color: #f0b400; }
+
+    .volume-narrative {
+      font-size: 13px;
+      line-height: 1.6;
+      color: #5a4200;
+      flex: 1;
+      min-width: 260px;
+    }
+
+    /* ── Status / toast ── */
+    .run-status {
+      font-size: 13px;
+      padding: 4px 0;
+      min-height: 20px;
+    }
+
+    .run-status.success { color: var(--positive); font-weight: 600; }
+    .run-status.error   { color: var(--negative); font-weight: 600; }
+
+    /* ── No-data banner ── */
+    .no-data-banner {
+      text-align: center;
+      padding: 80px 24px;
+      color: var(--text-muted);
+    }
+
+    .no-data-banner h2 { font-size: 20px; margin-bottom: 8px; color: var(--text); }
+    .no-data-banner p  { font-size: 14px; }
+
+    /* ── Section headers ── */
+    .section-title {
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--text);
+      margin: 0 0 16px;
+    }
+
+    .page-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .page-header h2 {
+      font-size: 20px;
+      font-weight: 700;
+    }
+
+    .week-badge {
+      font-size: 12px;
+      font-weight: 600;
+      background: #e8f4fd;
+      color: #0969da;
+      border-radius: 20px;
+      padding: 4px 12px;
+    }
+
+    .spacer { margin-bottom: 20px; }
+
+    /* ── Holistic share pill ── */
+    .share-pills {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-bottom: 16px;
+    }
+
+    .share-pill {
+      font-size: 12px;
+      font-weight: 700;
+      padding: 5px 14px;
+      border-radius: 20px;
+      color: #fff;
+    }
+
+    .pill-ppc-en  { background: var(--ppc-en); }
+    .pill-ppc-fr  { background: var(--ppc-fr); }
+    .pill-seo     { background: var(--seo); }
+
+    /* ── Adobe match type table color ── */
+    .match-total td { font-weight: 700; background: #f8f9fa; border-top: 2px solid var(--border); }
   </style>
 </head>
 <body>
-  <div class="card">
-    <div class="logo">Intuit SEO</div>
-    <h1>Weekly Reports</h1>
-    <p class="subtitle">Runs automatically every Monday. Use the buttons below if you need a refresh outside the schedule.</p>
 
-    <!-- QuickBooks -->
-    <div class="report-block">
-      <h2>QuickBooks</h2>
-      <p>GSC + Ads data for QB Canada. Covers quickbooks.intuit.com and accounts.intuit.com.</p>
-      <button class="active" id="qbBtn" onclick="triggerReport('qb')">Run QB Report</button>
-      <div class="status" id="qbStatus"></div>
+<!-- ── Navigation ─────────────────────────────────────────────────────────── -->
+<nav class="navbar">
+  <span class="navbar-brand">Intuit SEO</span>
+  <div class="nav-tabs">
+    <button class="nav-tab active" onclick="showTab('summary')">Summary</button>
+    <button class="nav-tab"        onclick="showTab('ppc')">PPC</button>
+    <button class="nav-tab"        onclick="showTab('seo')">SEO</button>
+    <button class="nav-tab"        onclick="showTab('holistic')">Holistic</button>
+    <button class="nav-tab"        onclick="showTab('adobe')">Adobe</button>
+  </div>
+  <div class="navbar-right">
+    <span class="last-updated" id="lastUpdated">Loading...</span>
+    <button class="btn-run" id="runBtn" onclick="triggerReport()">Run QB Report</button>
+  </div>
+</nav>
+<div style="font-size:12px;color:#888;padding:2px 24px;text-align:right;min-height:18px;" id="runStatus"></div>
+
+<!-- ── Content ────────────────────────────────────────────────────────────── -->
+<div class="content">
+
+  <!-- ── SUMMARY ──────────────────────────────────────────────────────────── -->
+  <div id="tab-summary" class="tab-panel active">
+    <div class="page-header">
+      <h2>Summary</h2>
+      <span class="week-badge" id="summaryWeekBadge"></span>
     </div>
 
-    <hr class="divider" />
+    <!-- KPI cards -->
+    <div class="kpi-grid" id="kpiGrid"></div>
 
-    <!-- Mailchimp -->
-    <div class="report-block">
-      <h2>Mailchimp <span class="badge">Coming soon</span></h2>
-      <p>GSC + Ads data for Mailchimp. Available once the MC SEO workflow is finalized.</p>
-      <button class="coming-soon" disabled>Run MC Report</button>
+    <!-- Search volume -->
+    <div class="volume-box">
+      <div class="volume-input-group">
+        <label>Search Volume ITPY %</label>
+        <input class="volume-input" type="number" id="searchVolumeInput"
+               placeholder="e.g. 89" step="0.1"
+               oninput="updateNarrative()" />
+      </div>
+      <div class="volume-narrative" id="volumeNarrative">
+        Enter the search volume ITPY % above to generate a narrative comparison.
+      </div>
     </div>
 
-    <hr class="divider" />
-
-    <div class="sheet-section-label">Open Google Sheets</div>
-    <div class="sheet-links">
-      <a class="sheet-link" href="https://docs.google.com/spreadsheets/d/1WtK7zFM4T0Re69Aoe6Ss3Kh1eOlRlpeGpZLVH4oTP84" target="_blank">QB Sheet →</a>
-      <a class="sheet-link disabled">MC Sheet (coming soon)</a>
+    <!-- Mini trend chart -->
+    <div class="card">
+      <div class="card-title">PPC EN + SEO Clicks — Last 13 Weeks</div>
+      <div class="chart-container">
+        <canvas id="summaryChart"></canvas>
+      </div>
     </div>
   </div>
 
-  <script>
-    const GITHUB_TOKEN = "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";
+  <!-- ── PPC ──────────────────────────────────────────────────────────────── -->
+  <div id="tab-ppc" class="tab-panel">
+    <div class="page-header">
+      <h2>PPC Performance</h2>
+      <span class="week-badge" id="ppcWeekBadge"></span>
+    </div>
 
-    const WORKFLOWS = {
-      qb: {
-        repo:     "tamaral-tech/seo-kpi-weekly",
-        workflow: "weekly_report.yml",
-        branch:   "main"
-      },
-      // mc: {
-      //   repo:     "tamaral-tech/seo-kpi-weekly",
-      //   workflow: "mc_report.yml",
-      //   branch:   "main"
-      // }
-    };
+    <div class="chart-row">
+      <div class="card">
+        <div class="card-title">EN Clicks — FY26 vs FY25</div>
+        <div class="chart-container"><canvas id="ppcEnChart"></canvas></div>
+      </div>
+      <div class="card">
+        <div class="card-title">FR Clicks — FY26 vs FY25</div>
+        <div class="chart-container"><canvas id="ppcFrChart"></canvas></div>
+      </div>
+    </div>
 
-    async function triggerReport(key) {
-      const cfg    = WORKFLOWS[key];
-      const btn    = document.getElementById(`${key}Btn`);
-      const status = document.getElementById(`${key}Status`);
+    <div class="card">
+      <div class="card-title">Weekly Detail</div>
+      <div class="table-wrap">
+        <table id="ppcTable">
+          <thead>
+            <tr>
+              <th>Week</th>
+              <th>EN Clicks</th><th>EN ITPY</th><th>EN WoW</th>
+              <th>FR Clicks</th><th>FR ITPY</th><th>FR WoW</th>
+              <th>Cost</th>
+              <th>QBO BINs</th><th>QBSE BINs</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
 
-      btn.disabled    = true;
-      btn.textContent = "Triggering...";
-      status.className = "status";
-      status.textContent = "";
+  <!-- ── SEO ──────────────────────────────────────────────────────────────── -->
+  <div id="tab-seo" class="tab-panel">
+    <div class="page-header">
+      <h2>SEO Performance</h2>
+      <span class="week-badge" id="seoWeekBadge"></span>
+    </div>
 
-      try {
-        const res = await fetch(
-          `https://api.github.com/repos/${cfg.repo}/actions/workflows/${cfg.workflow}/dispatches`,
-          {
-            method: "POST",
-            headers: {
-              "Authorization": `Bearer ${GITHUB_TOKEN}`,
-              "Accept": "application/vnd.github+json",
-              "Content-Type": "application/json"
-            },
-            body: JSON.stringify({ ref: cfg.branch })
+    <div class="chart-row">
+      <div class="card">
+        <div class="card-title">quickbooks.intuit.com Clicks — FY26 vs FY25</div>
+        <div class="chart-container"><canvas id="seoQbChart"></canvas></div>
+      </div>
+      <div class="card">
+        <div class="card-title">accounts.intuit.com Clicks — FY26 vs FY25</div>
+        <div class="chart-container"><canvas id="seoAcctsChart"></canvas></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">Weekly Detail</div>
+      <div class="table-wrap">
+        <table id="seoTable">
+          <thead>
+            <tr>
+              <th>Week</th>
+              <th>QB Clicks</th><th>QB ITPY</th><th>QB WoW</th>
+              <th>Accts Clicks</th><th>Accts ITPY</th><th>Accts WoW</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── HOLISTIC ──────────────────────────────────────────────────────────── -->
+  <div id="tab-holistic" class="tab-panel">
+    <div class="page-header">
+      <h2>Holistic Click Share</h2>
+      <span class="week-badge" id="holisticWeekBadge"></span>
+    </div>
+
+    <div id="holisticSharePills" class="share-pills"></div>
+
+    <div class="chart-row single">
+      <div class="card">
+        <div class="card-title">PPC EN + PPC FR + SEO Clicks — Last 13 Weeks</div>
+        <div class="chart-container" style="height:280px;">
+          <canvas id="holisticStackedChart"></canvas>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">Weekly Detail</div>
+      <div class="table-wrap">
+        <table id="holisticTable">
+          <thead>
+            <tr>
+              <th>Week</th>
+              <th>PPC EN</th><th>PPC EN %</th>
+              <th>PPC FR</th><th>PPC FR %</th>
+              <th>SEO</th><th>SEO %</th>
+              <th>Total</th><th>Total ITPY</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── ADOBE ──────────────────────────────────────────────────────────────── -->
+  <div id="tab-adobe" class="tab-panel">
+    <div class="page-header">
+      <h2>Adobe Analytics</h2>
+      <span class="week-badge" id="adobeWeekBadge"></span>
+    </div>
+
+    <!-- Holistic BINs trend -->
+    <div class="card spacer">
+      <div class="card-title">Holistic QBO BINs — Last 13 Weeks</div>
+      <div class="chart-container">
+        <canvas id="adobeBinsChart"></canvas>
+      </div>
+    </div>
+
+    <!-- KPI cards: holistic vs PPC vs derived SEO -->
+    <div class="kpi-grid" id="adobeKpiGrid" style="margin-bottom:20px;"></div>
+
+    <!-- Match type table -->
+    <div class="card spacer">
+      <div class="card-title">Match Type Breakdown — Current Week</div>
+      <div class="table-wrap">
+        <table id="matchTypeTable">
+          <thead>
+            <tr>
+              <th>Match Type</th>
+              <th>Unique Visitors</th>
+              <th>QB Signups</th>
+              <th>QB BIN</th>
+              <th>QBO BIN (CA)</th>
+              <th>QB Trial</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Brand Intent -->
+    <div class="card">
+      <div class="card-title">Brand Intent — Current Week</div>
+      <div id="brandIntentBlock"></div>
+    </div>
+  </div>
+
+</div><!-- /content -->
+
+<script>
+// ── Data & state ──────────────────────────────────────────────────────────────
+let D = null;          // dashboard_data.json payload
+let charts = {};       // Chart.js instances keyed by canvas id
+
+const GITHUB_TOKEN = "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";
+const QB_WORKFLOW  = { repo: "tamaral-tech/seo-kpi-weekly", workflow: "weekly_report.yml", branch: "main" };
+
+// ── Formatting helpers ────────────────────────────────────────────────────────
+const fmt = n => n == null ? "—" : Number(n).toLocaleString();
+const fmtPct = (v, suffix="%") => v == null ? "—" : `${v > 0 ? "+" : ""}${v.toFixed(1)}${suffix}`;
+const fmtItpy = v => v == null ? "—" : `${v.toFixed(1)}%`;
+const fmtMoney = v => v == null ? "—" : `$${Number(v).toLocaleString("en-CA", {minimumFractionDigits:0, maximumFractionDigits:0})}`;
+
+function deltaClass(v) {
+  if (v == null) return "flat";
+  if (v >= 100) return "flat";   // ITPY: 100% = flat, >100 = good
+  return "flat";
+}
+
+function itpyClass(v) {
+  if (v == null) return "flat td-flat";
+  return v >= 100 ? "td-up" : "td-down";
+}
+
+function wowClass(v) {
+  if (v == null) return "td-flat";
+  return v >= 0 ? "td-up" : "td-down";
+}
+
+function deltaHtml(v, mode="itpy") {
+  const cls = mode === "itpy" ? itpyClass(v) : wowClass(v);
+  const label = mode === "itpy" ? "ITPY" : "WoW";
+  if (v == null) return `<span class="delta flat"><span class="delta-label">${label}</span> —</span>`;
+  const arrow = mode === "itpy"
+    ? (v >= 100 ? "▲" : "▼")
+    : (v >= 0   ? "▲" : "▼");
+  const display = mode === "itpy" ? `${v.toFixed(1)}%` : `${v > 0 ? "+" : ""}${v.toFixed(1)}%`;
+  const color = cls.includes("up") ? "var(--positive)" : cls.includes("down") ? "var(--negative)" : "var(--neutral)";
+  return `<span class="delta" style="color:${color}">${arrow} ${display} <span class="delta-label">${label}</span></span>`;
+}
+
+// ── Tab switching ─────────────────────────────────────────────────────────────
+function showTab(name) {
+  document.querySelectorAll(".tab-panel").forEach(p => p.classList.remove("active"));
+  document.querySelectorAll(".nav-tab").forEach(b => b.classList.remove("active"));
+  document.getElementById("tab-" + name).classList.add("active");
+  document.querySelectorAll(".nav-tab").forEach(b => {
+    if (b.textContent.toLowerCase().trim() === name ||
+        (name === "ppc" && b.textContent.trim() === "PPC") ||
+        (name === "seo" && b.textContent.trim() === "SEO")) {
+      b.classList.add("active");
+    }
+  });
+  // Re-render chart that became visible
+  if (charts["summaryChart"] && name === "summary") charts["summaryChart"].update();
+  if (charts["ppcEnChart"] && name === "ppc")       { charts["ppcEnChart"].update(); charts["ppcFrChart"].update(); }
+  if (charts["seoQbChart"] && name === "seo")       { charts["seoQbChart"].update(); charts["seoAcctsChart"].update(); }
+  if (charts["holisticStackedChart"] && name === "holistic") charts["holisticStackedChart"].update();
+  if (charts["adobeBinsChart"] && name === "adobe") charts["adobeBinsChart"].update();
+}
+
+// Nav tab click via text matching
+document.querySelectorAll(".nav-tab").forEach((btn, i) => {
+  btn.onclick = () => {
+    const map = ["summary","ppc","seo","holistic","adobe"];
+    showTab(map[i]);
+  };
+});
+
+// ── Chart factory ─────────────────────────────────────────────────────────────
+function makeLineChart(canvasId, labels, datasets, opts={}) {
+  const ctx = document.getElementById(canvasId).getContext("2d");
+  if (charts[canvasId]) charts[canvasId].destroy();
+  charts[canvasId] = new Chart(ctx, {
+    type: "line",
+    data: { labels, datasets },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      interaction: { mode: "index", intersect: false },
+      plugins: {
+        legend: { position: "top", labels: { boxWidth: 12, font: { size: 11 } } },
+        tooltip: {
+          callbacks: {
+            label: ctx => ` ${ctx.dataset.label}: ${fmt(ctx.parsed.y)}`
           }
-        );
-
-        if (res.status === 204) {
-          status.className   = "status success";
-          status.textContent = "Triggered! Report will update in ~1 minute.";
-          btn.textContent    = "Run QB Report";
-          btn.disabled       = false;
-        } else {
-          const body = await res.json().catch(() => ({}));
-          throw new Error(body.message || `HTTP ${res.status}`);
         }
-      } catch (err) {
-        status.className   = "status error";
-        status.textContent = "Error: " + err.message;
-        btn.textContent    = "Run QB Report";
-        btn.disabled       = false;
+      },
+      scales: {
+        x: { grid: { display: false }, ticks: { font: { size: 11 } } },
+        y: {
+          grid: { color: "#f0f0f0" },
+          ticks: { font: { size: 11 }, callback: v => fmt(v) },
+          ...( opts.yMin !== undefined ? { min: opts.yMin } : {} )
+        }
+      },
+      ...opts.chartOpts
+    }
+  });
+}
+
+function makeBarChart(canvasId, labels, datasets) {
+  const ctx = document.getElementById(canvasId).getContext("2d");
+  if (charts[canvasId]) charts[canvasId].destroy();
+  charts[canvasId] = new Chart(ctx, {
+    type: "bar",
+    data: { labels, datasets },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      interaction: { mode: "index", intersect: false },
+      plugins: {
+        legend: { position: "top", labels: { boxWidth: 12, font: { size: 11 } } },
+        tooltip: { callbacks: { label: ctx => ` ${ctx.dataset.label}: ${fmt(ctx.parsed.y)}` } }
+      },
+      scales: {
+        x: { stacked: true, grid: { display: false }, ticks: { font: { size: 11 } } },
+        y: { stacked: true, grid: { color: "#f0f0f0" }, ticks: { font: { size: 11 }, callback: v => fmt(v) } }
       }
     }
-  </script>
+  });
+}
+
+// ── Load & render ──────────────────────────────────────────────────────────────
+async function loadData() {
+  try {
+    const resp = await fetch("./data/dashboard_data.json?v=" + Date.now());
+    const json = await resp.json();
+    if (!json.meta) {
+      showNoData();
+      return;
+    }
+    D = json;
+    render();
+  } catch (e) {
+    showNoData("Could not load dashboard data: " + e.message);
+  }
+}
+
+function showNoData(msg) {
+  const banner = `<div class="no-data-banner"><h2>No data yet</h2>
+    <p>${msg || "Run the QB Report to populate the dashboard."}</p></div>`;
+  document.getElementById("tab-summary").innerHTML = banner;
+  document.getElementById("lastUpdated").textContent = "No data";
+}
+
+function render() {
+  const meta = D.meta;
+  document.getElementById("lastUpdated").textContent = "Updated: " + meta.fiscal_week;
+
+  const weekBadge = `${meta.fiscal_week} · ${meta.week_start} – ${meta.week_end}`;
+  ["summary","ppc","seo","holistic","adobe"].forEach(t => {
+    const el = document.getElementById(t + "WeekBadge");
+    if (el) el.textContent = weekBadge;
+  });
+
+  renderSummary();
+  renderPpc();
+  renderSeo();
+  renderHolistic();
+  renderAdobe();
+
+  // Restore saved search volume
+  const sv = localStorage.getItem("searchVolumeItpy");
+  if (sv) {
+    document.getElementById("searchVolumeInput").value = sv;
+    updateNarrative();
+  }
+}
+
+// ── Summary ────────────────────────────────────────────────────────────────────
+function renderSummary() {
+  const ppc = D.ppc.history;
+  const seo = D.seo.history;
+  const adobe = D.adobe;
+
+  const lastPpc = ppc.at(-1) || {};
+  const lastSeo = seo.at(-1) || {};
+  const bi = adobe.brand_intent || {};
+  const mt = adobe.match_types;
+
+  const ppcBinTotal = mt ? mt.total.qbo_bin : 0;
+  const holBins = adobe.holistic_history;
+  const lastHol = holBins && holBins.length ? holBins.at(-1) : {};
+  const prevHol = holBins && holBins.length > 1 ? holBins.at(-2) : {};
+
+  const holBinWow = lastHol.qbo_bin && prevHol.qbo_bin
+    ? wow(lastHol.qbo_bin, prevHol.qbo_bin) : null;
+
+  const kpis = [
+    {
+      id: "ppc-en", colorClass: "ppc-en", label: "PPC EN Clicks",
+      value: lastPpc.en_clicks,
+      deltas: [
+        { v: lastPpc.en_itpy,  mode: "itpy" },
+        { v: lastPpc.en_wow,   mode: "wow"  }
+      ]
+    },
+    {
+      id: "ppc-fr", colorClass: "ppc-fr", label: "PPC FR Clicks",
+      value: lastPpc.fr_clicks,
+      deltas: [
+        { v: lastPpc.fr_itpy,  mode: "itpy" },
+        { v: lastPpc.fr_wow,   mode: "wow"  }
+      ]
+    },
+    {
+      id: "seo-qb", colorClass: "seo-qb", label: "SEO QB Clicks",
+      value: lastSeo.qb_clicks,
+      deltas: [
+        { v: lastSeo.qb_itpy,  mode: "itpy" },
+        { v: lastSeo.qb_wow,   mode: "wow"  }
+      ]
+    },
+    {
+      id: "seo-ac", colorClass: "seo-ac", label: "SEO Accts Clicks",
+      value: lastSeo.accts_clicks,
+      deltas: [
+        { v: lastSeo.accts_itpy, mode: "itpy" },
+        { v: lastSeo.accts_wow,  mode: "wow"  }
+      ]
+    },
+    {
+      id: "adobe", colorClass: "adobe", label: "Holistic QBO BINs",
+      value: lastHol.qbo_bin || ppcBinTotal,
+      deltas: [
+        { v: bi.itpy_pct ? bi.itpy_pct : null, mode: "itpy" },
+        { v: holBinWow, mode: "wow" }
+      ]
+    }
+  ];
+
+  const grid = document.getElementById("kpiGrid");
+  grid.innerHTML = kpis.map(k => `
+    <div class="kpi-card ${k.colorClass}">
+      <div class="kpi-label">${k.label}</div>
+      <div class="kpi-value">${fmt(k.value)}</div>
+      <div class="kpi-deltas">
+        ${k.deltas.map(d => deltaHtml(d.v, d.mode)).join("")}
+      </div>
+    </div>
+  `).join("");
+
+  // Mini trend chart
+  const labels  = D.ppc.history.map(r => r.week.replace("FY26 ", ""));
+  const enData  = D.ppc.history.map(r => r.en_clicks);
+  const seoData = D.seo.history.map(r => r.qb_clicks);
+
+  makeLineChart("summaryChart", labels, [
+    { label: "PPC EN Clicks", data: enData,  borderColor: getComputedStyle(document.documentElement).getPropertyValue("--ppc-en").trim(), backgroundColor: "transparent", tension: 0.3, pointRadius: 3 },
+    { label: "SEO QB Clicks", data: seoData, borderColor: getComputedStyle(document.documentElement).getPropertyValue("--seo").trim(),    backgroundColor: "transparent", tension: 0.3, pointRadius: 3 },
+  ]);
+}
+
+// ── Narrative ─────────────────────────────────────────────────────────────────
+function updateNarrative() {
+  const sv = parseFloat(document.getElementById("searchVolumeInput").value);
+  const el = document.getElementById("volumeNarrative");
+  if (!D || isNaN(sv)) {
+    el.textContent = "Enter the search volume ITPY % above to generate a narrative comparison.";
+    return;
+  }
+  localStorage.setItem("searchVolumeItpy", sv);
+
+  const ppcLast  = D.ppc.history.at(-1) || {};
+  const seoLast  = D.seo.history.at(-1) || {};
+  const ppcItpy  = ppcLast.en_itpy;
+  const seoItpy  = seoLast.qb_itpy;
+
+  const volDelta = sv - 100;
+  const parts = [];
+  parts.push(`Search volume is ${volDelta > 0 ? "+" : ""}${volDelta.toFixed(1)}% YoY.`);
+
+  function channelLine(name, itpyVal) {
+    if (itpyVal == null) return `${name}: no data.`;
+    const diff = itpyVal - sv;
+    const dir = itpyVal > 100 ? "▲" : "▼";
+    const pct = `${itpyVal.toFixed(1)}% ITPY`;
+    if (Math.abs(diff) < 4) return `${name} (${pct}) is in line with volume.`;
+    if (diff < 0) return `${name} (${pct}) is underperforming vs volume by ${Math.abs(diff).toFixed(1)}pp.`;
+    return `${name} (${pct}) is outperforming volume by ${diff.toFixed(1)}pp.`;
+  }
+
+  parts.push(channelLine("PPC EN", ppcItpy));
+  parts.push(channelLine("SEO",    seoItpy));
+
+  el.textContent = parts.join(" ");
+}
+
+// ── PPC ────────────────────────────────────────────────────────────────────────
+function renderPpc() {
+  const h = D.ppc.history;
+  if (!h.length) return;
+  const labels = h.map(r => r.week.replace("FY26 ",""));
+
+  const CSS = v => getComputedStyle(document.documentElement).getPropertyValue(v).trim();
+
+  makeLineChart("ppcEnChart", labels, [
+    { label: "FY26 EN",  data: h.map(r => r.en_clicks),    borderColor: CSS("--ppc-en"),  backgroundColor: "transparent", tension: 0.3, pointRadius: 3 },
+    { label: "FY25 EN",  data: h.map(r => r.en_clicks_ly), borderColor: CSS("--ppc-en"),  backgroundColor: "transparent", tension: 0.3, pointRadius: 2, borderDash: [5,3], opacity: 0.5 },
+  ]);
+
+  makeLineChart("ppcFrChart", labels, [
+    { label: "FY26 FR",  data: h.map(r => r.fr_clicks),    borderColor: CSS("--ppc-fr"),  backgroundColor: "transparent", tension: 0.3, pointRadius: 3 },
+    { label: "FY25 FR",  data: h.map(r => r.fr_clicks_ly), borderColor: CSS("--ppc-fr"),  backgroundColor: "transparent", tension: 0.3, pointRadius: 2, borderDash: [5,3] },
+  ]);
+
+  const tbody = document.querySelector("#ppcTable tbody");
+  tbody.innerHTML = [...h].reverse().map(r => `
+    <tr>
+      <td>${r.week}</td>
+      <td>${fmt(r.en_clicks)}</td>
+      <td class="td-delta ${itpyClass(r.en_itpy)}">${fmtItpy(r.en_itpy)}</td>
+      <td class="td-delta ${wowClass(r.en_wow)}">${fmtPct(r.en_wow)}</td>
+      <td>${fmt(r.fr_clicks)}</td>
+      <td class="td-delta ${itpyClass(r.fr_itpy)}">${fmtItpy(r.fr_itpy)}</td>
+      <td class="td-delta ${wowClass(r.fr_wow)}">${fmtPct(r.fr_wow)}</td>
+      <td>${fmtMoney(r.cost)}</td>
+      <td>${fmt(r.qbo_bin)}</td>
+      <td>${fmt(r.qbse_bin)}</td>
+    </tr>
+  `).join("");
+}
+
+// ── SEO ────────────────────────────────────────────────────────────────────────
+function renderSeo() {
+  const h = D.seo.history;
+  if (!h.length) return;
+  const labels = h.map(r => r.week.replace("FY26 ",""));
+  const CSS = v => getComputedStyle(document.documentElement).getPropertyValue(v).trim();
+
+  makeLineChart("seoQbChart", labels, [
+    { label: "FY26 QB",  data: h.map(r => r.qb_clicks),    borderColor: CSS("--seo"),        backgroundColor: "transparent", tension: 0.3, pointRadius: 3 },
+    { label: "FY25 QB",  data: h.map(r => r.qb_clicks_ly), borderColor: CSS("--seo"),        backgroundColor: "transparent", tension: 0.3, pointRadius: 2, borderDash: [5,3] },
+  ]);
+
+  makeLineChart("seoAcctsChart", labels, [
+    { label: "FY26 Accts", data: h.map(r => r.accts_clicks),    borderColor: CSS("--seo-accts"), backgroundColor: "transparent", tension: 0.3, pointRadius: 3 },
+    { label: "FY25 Accts", data: h.map(r => r.accts_clicks_ly), borderColor: CSS("--seo-accts"), backgroundColor: "transparent", tension: 0.3, pointRadius: 2, borderDash: [5,3] },
+  ]);
+
+  const tbody = document.querySelector("#seoTable tbody");
+  tbody.innerHTML = [...h].reverse().map(r => `
+    <tr>
+      <td>${r.week}</td>
+      <td>${fmt(r.qb_clicks)}</td>
+      <td class="td-delta ${itpyClass(r.qb_itpy)}">${fmtItpy(r.qb_itpy)}</td>
+      <td class="td-delta ${wowClass(r.qb_wow)}">${fmtPct(r.qb_wow)}</td>
+      <td>${fmt(r.accts_clicks)}</td>
+      <td class="td-delta ${itpyClass(r.accts_itpy)}">${fmtItpy(r.accts_itpy)}</td>
+      <td class="td-delta ${wowClass(r.accts_wow)}">${fmtPct(r.accts_wow)}</td>
+    </tr>
+  `).join("");
+}
+
+// ── Holistic ──────────────────────────────────────────────────────────────────
+function renderHolistic() {
+  const h = D.holistic.history;
+  if (!h.length) return;
+  const labels = h.map(r => r.week.replace("FY26 ",""));
+  const CSS = v => getComputedStyle(document.documentElement).getPropertyValue(v).trim();
+
+  // Stacked bar chart
+  makeBarChart("holisticStackedChart", labels, [
+    { label: "PPC EN", data: h.map(r => r.ppc_en), backgroundColor: CSS("--ppc-en") + "cc" },
+    { label: "PPC FR", data: h.map(r => r.ppc_fr), backgroundColor: CSS("--ppc-fr") + "cc" },
+    { label: "SEO QB", data: h.map(r => r.seo_qb), backgroundColor: CSS("--seo")    + "cc" },
+  ]);
+
+  // Current-week share pills
+  const last = h.at(-1) || {};
+  const pills = document.getElementById("holisticSharePills");
+  pills.innerHTML = `
+    <span class="share-pill pill-ppc-en">PPC EN: ${last.ppc_en_share || 0}%</span>
+    <span class="share-pill pill-ppc-fr">PPC FR: ${last.ppc_fr_share || 0}%</span>
+    <span class="share-pill pill-seo">SEO: ${last.seo_share || 0}%</span>
+  `;
+
+  const tbody = document.querySelector("#holisticTable tbody");
+  tbody.innerHTML = [...h].reverse().map(r => `
+    <tr>
+      <td>${r.week}</td>
+      <td>${fmt(r.ppc_en)}</td><td>${r.ppc_en_share || 0}%</td>
+      <td>${fmt(r.ppc_fr)}</td><td>${r.ppc_fr_share || 0}%</td>
+      <td>${fmt(r.seo_qb)}</td><td>${r.seo_share || 0}%</td>
+      <td>${fmt(r.total)}</td>
+      <td class="td-delta ${itpyClass(r.total_itpy)}">${fmtItpy(r.total_itpy)}</td>
+    </tr>
+  `).join("");
+}
+
+// ── Adobe ─────────────────────────────────────────────────────────────────────
+function renderAdobe() {
+  const adobe = D.adobe;
+  const holH  = adobe.holistic_history || [];
+  const mt    = adobe.match_types;
+  const bi    = adobe.brand_intent;
+
+  // Trend chart
+  if (holH.length) {
+    const labels = holH.map(r => r.week.replace("FY26 ",""));
+    const CSS = v => getComputedStyle(document.documentElement).getPropertyValue(v).trim();
+    makeLineChart("adobeBinsChart", labels, [
+      { label: "Holistic QBO BINs", data: holH.map(r => r.qbo_bin),    borderColor: CSS("--holistic"), backgroundColor: "transparent", tension: 0.3, pointRadius: 3 },
+      { label: "QB Signups",        data: holH.map(r => r.qb_signups), borderColor: CSS("--ppc-en"),   backgroundColor: "transparent", tension: 0.3, pointRadius: 3, borderDash: [5,3] },
+    ]);
+  }
+
+  // KPI cards (current week holistic BINs + brand intent)
+  const lastHol = holH.at(-1) || {};
+  const prevHol = holH.length > 1 ? holH.at(-2) : {};
+  const ppcBin  = mt ? mt.total.qbo_bin : null;
+  const seoBin  = lastHol.qbo_bin && ppcBin ? Math.max(0, lastHol.qbo_bin - ppcBin) : null;
+
+  const grid = document.getElementById("adobeKpiGrid");
+  grid.innerHTML = `
+    <div class="kpi-card adobe">
+      <div class="kpi-label">Holistic QBO BINs</div>
+      <div class="kpi-value">${fmt(lastHol.qbo_bin)}</div>
+      <div class="kpi-deltas">
+        ${deltaHtml(prevHol.qbo_bin ? wow(lastHol.qbo_bin, prevHol.qbo_bin) : null, "wow")}
+      </div>
+    </div>
+    <div class="kpi-card ppc-en">
+      <div class="kpi-label">PPC QBO BINs</div>
+      <div class="kpi-value">${fmt(ppcBin)}</div>
+      <div class="kpi-deltas"><span class="delta flat"><span class="delta-label">Current week</span></span></div>
+    </div>
+    <div class="kpi-card seo-qb">
+      <div class="kpi-label">SEO QBO BINs (est.)</div>
+      <div class="kpi-value">${fmt(seoBin)}</div>
+      <div class="kpi-deltas"><span class="delta flat" style="font-size:11px;color:var(--text-muted)">Holistic minus PPC</span></div>
+    </div>
+    <div class="kpi-card" style="border-top-color:#9b59b6;">
+      <div class="kpi-label">Brand Intent</div>
+      <div class="kpi-value">${bi ? fmt(bi.current) : "—"}</div>
+      <div class="kpi-deltas">
+        ${bi ? deltaHtml(bi.itpy_pct, "itpy") : ""}
+        ${bi ? deltaHtml(bi.itpw_pct ? (bi.itpw_pct - 100) : null, "wow") : ""}
+      </div>
+    </div>
+  `;
+
+  // Match type table
+  if (mt) {
+    const tbody = document.querySelector("#matchTypeTable tbody");
+    const rows = mt.rows.map(r => `
+      <tr>
+        <td>${r.label.replace("ECS: ","")}</td>
+        <td>${fmt(r.unique_visitors)}</td>
+        <td>${fmt(r.qb_signups)}</td>
+        <td>${fmt(r.qb_bin)}</td>
+        <td>${fmt(r.qbo_bin)}</td>
+        <td>${fmt(r.qb_trial)}</td>
+      </tr>
+    `).join("");
+    const t = mt.total;
+    tbody.innerHTML = rows + `
+      <tr class="match-total">
+        <td>TOTAL</td>
+        <td>${fmt(t.unique_visitors)}</td>
+        <td>${fmt(t.qb_signups)}</td>
+        <td>${fmt(t.qb_bin)}</td>
+        <td>${fmt(t.qbo_bin)}</td>
+        <td>${fmt(t.qb_trial)}</td>
+      </tr>
+    `;
+  }
+
+  // Brand intent block
+  if (bi) {
+    document.getElementById("brandIntentBlock").innerHTML = `
+      <div class="kpi-grid" style="grid-template-columns:repeat(3,1fr);">
+        <div><div class="kpi-label">Current Week</div><div class="kpi-value" style="font-size:24px;">${fmt(bi.current)}</div></div>
+        <div>
+          <div class="kpi-label">Prior Week</div>
+          <div class="kpi-value" style="font-size:24px;">${fmt(bi.prior_week)}</div>
+          <div class="delta" style="color:${bi.itpw_pct >= 100 ? "var(--positive)" : "var(--negative)"}">
+            ${bi.itpw_pct ? bi.itpw_pct.toFixed(1) + "% ITPW" : "—"}
+          </div>
+        </div>
+        <div>
+          <div class="kpi-label">Last Year</div>
+          <div class="kpi-value" style="font-size:24px;">${fmt(bi.itpy)}</div>
+          <div class="delta" style="color:${bi.itpy_pct >= 100 ? "var(--positive)" : "var(--negative)"}">
+            ${bi.itpy_pct ? bi.itpy_pct.toFixed(1) + "% ITPY" : "—"}
+          </div>
+        </div>
+      </div>
+    `;
+  }
+}
+
+// ── Run report ────────────────────────────────────────────────────────────────
+async function triggerReport() {
+  const btn    = document.getElementById("runBtn");
+  const status = document.getElementById("runStatus");
+  btn.disabled    = true;
+  btn.textContent = "Triggering...";
+  status.className = "run-status";
+  status.textContent = "";
+
+  try {
+    const res = await fetch(
+      `https://api.github.com/repos/${QB_WORKFLOW.repo}/actions/workflows/${QB_WORKFLOW.workflow}/dispatches`,
+      {
+        method: "POST",
+        headers: {
+          "Authorization": `Bearer ${GITHUB_TOKEN}`,
+          "Accept": "application/vnd.github+json",
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ ref: QB_WORKFLOW.branch })
+      }
+    );
+    if (res.status === 204) {
+      status.className   = "run-status success";
+      status.textContent = "Triggered! Report will update in ~2 minutes.";
+    } else {
+      const body = await res.json().catch(() => ({}));
+      throw new Error(body.message || `HTTP ${res.status}`);
+    }
+  } catch (err) {
+    status.className   = "run-status error";
+    status.textContent = "Error: " + err.message;
+  } finally {
+    btn.textContent = "Run QB Report";
+    btn.disabled    = false;
+  }
+}
+
+// ── Helpers used in templates ─────────────────────────────────────────────────
+function wow(a, b) { return b > 0 ? +((a - b) / b * 100).toFixed(1) : null; }
+
+// ── Boot ──────────────────────────────────────────────────────────────────────
+loadData();
+</script>
 </body>
 </html>
