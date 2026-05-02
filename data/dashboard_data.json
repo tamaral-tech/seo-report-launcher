@@ -1,6 +1,6 @@
 {
   "meta": {
-    "generated_at": "2026-05-02T18:36:08",
+    "generated_at": "2026-05-02T18:58:58",
     "fiscal_week": "FY26 W39",
     "week_start": "2026-04-19",
     "week_end": "2026-04-25",
@@ -593,82 +593,108 @@
   "adobe": {
     "holistic_history": [
       {
-        "week": "FY26 W35",
-        "week_start": "2026-03-22",
-        "qb_signups": 326,
-        "qbo_bin": 283
-      },
-      {
         "week": "FY26 W27",
         "week_start": "2026-01-25",
         "qb_signups": 320,
-        "qbo_bin": 308
-      },
-      {
-        "week": "FY26 W29",
-        "week_start": "2026-02-08",
-        "qb_signups": 292,
-        "qbo_bin": 267
-      },
-      {
-        "week": "FY26 W33",
-        "week_start": "2026-03-08",
-        "qb_signups": 290,
-        "qbo_bin": 277
-      },
-      {
-        "week": "FY26 W37",
-        "week_start": "2026-04-05",
-        "qb_signups": 288,
-        "qbo_bin": 267
-      },
-      {
-        "week": "FY26 W34",
-        "week_start": "2026-03-15",
-        "qb_signups": 283,
-        "qbo_bin": 271
-      },
-      {
-        "week": "FY26 W30",
-        "week_start": "2026-02-15",
-        "qb_signups": 275,
-        "qbo_bin": 255
-      },
-      {
-        "week": "FY26 W31",
-        "week_start": "2026-02-22",
-        "qb_signups": 272,
-        "qbo_bin": 245
-      },
-      {
-        "week": "FY26 W38",
-        "week_start": "2026-04-12",
-        "qb_signups": 267,
-        "qbo_bin": 246
-      },
-      {
-        "week": "FY26 W36",
-        "week_start": "2026-03-29",
-        "qb_signups": 262,
-        "qbo_bin": 248
-      },
-      {
-        "week": "FY26 W32",
-        "week_start": "2026-03-01",
-        "qb_signups": 249,
-        "qbo_bin": 222
-      },
-      {
-        "week": "FY26 W39",
-        "week_start": "2026-04-19",
-        "qb_signups": 243,
-        "qbo_bin": 224
+        "qbo_bin": 308,
+        "qbo_bin_ppc": 1507,
+        "qbo_bin_seo": 473
       },
       {
         "week": "FY26 W28",
         "week_start": "2026-02-01",
         "qb_signups": 241,
-        "qbo_bin": 218
+        "qbo_bin": 218,
+        "qbo_bin_ppc": 1267,
+        "qbo_bin_seo": 393
+      },
+      {
+        "week": "FY26 W29",
+        "week_start": "2026-02-08",
+        "qb_signups": 292,
+        "qbo_bin": 267,
+        "qbo_bin_ppc": 1098,
+        "qbo_bin_seo": 331
+      },
+      {
+        "week": "FY26 W30",
+        "week_start": "2026-02-15",
+        "qb_signups": 275,
+        "qbo_bin": 255,
+        "qbo_bin_ppc": 1274,
+        "qbo_bin_seo": 413
+      },
+      {
+        "week": "FY26 W31",
+        "week_start": "2026-02-22",
+        "qb_signups": 272,
+        "qbo_bin": 245,
+        "qbo_bin_ppc": 1189,
+        "qbo_bin_seo": 375
+      },
+      {
+        "week": "FY26 W32",
+        "week_start": "2026-03-01",
+        "qb_signups": 249,
+        "qbo_bin": 222,
+        "qbo_bin_ppc": 1111,
+        "qbo_bin_seo": 402
+      },
+      {
+        "week": "FY26 W33",
+        "week_start": "2026-03-08",
+        "qb_signups": 290,
+        "qbo_bin": 277,
+        "qbo_bin_ppc": 1378,
+        "qbo_bin_seo": 374
+      },
+      {
+        "week": "FY26 W34",
+        "week_start": "2026-03-15",
+        "qb_signups": 283,
+        "qbo_bin": 271,
+        "qbo_bin_ppc": 1298,
+        "qbo_bin_seo": 385
+      },
+      {
+        "week": "FY26 W35",
+        "week_start": "2026-03-22",
+        "qb_signups": 326,
+        "qbo_bin": 283,
+        "qbo_bin_ppc": 1351,
+        "qbo_bin_seo": 456
+      },
+      {
+        "week": "FY26 W36",
+        "week_start": "2026-03-29",
+        "qb_signups": 262,
+        "qbo_bin": 248,
+        "qbo_bin_ppc": 1230,
+        "qbo_bin_seo": 401
+      },
+      {
+        "week": "FY26 W37",
+        "week_start": "2026-04-05",
+        "qb_signups": 288,
+        "qbo_bin": 267,
+        "qbo_bin_ppc": 1244,
+        "qbo_bin_seo": 391
+      },
+      {
+        "week": "FY26 W38",
+        "week_start": "2026-04-12",
+        "qb_signups": 267,
+        "qbo_bin": 246,
+        "qbo_bin_ppc": 1311,
+        "qbo_bin_seo": 424
+      },
+      {
+        "week": "FY26 W39",
+        "week_start": "2026-04-19",
+        "qb_signups": 243,
+        "qbo_bin": 224,
+        "qbo_bin_ppc": 1262,
+        "qbo_bin_seo": 448
       }
     ],
     "match_types": {

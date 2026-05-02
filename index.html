@@ -1001,8 +1001,10 @@ function renderAdobe() {
   // KPI cards (current week holistic BINs + brand intent)
   const lastHol = holH.at(-1) || {};
   const prevHol = holH.length > 1 ? holH.at(-2) : {};
-  const ppcBin  = mt ? mt.total.qbo_bin : null;
-  const seoBin  = lastHol.qbo_bin && ppcBin ? Math.max(0, lastHol.qbo_bin - ppcBin) : null;
+  const ppcBin  = lastHol.qbo_bin_ppc || null;
+  const seoBin  = lastHol.qbo_bin_seo || null;
+  const prevPpcBin = prevHol.qbo_bin_ppc || null;
+  const prevSeoBin = prevHol.qbo_bin_seo || null;
 
   const grid = document.getElementById("adobeKpiGrid");
   grid.innerHTML = `
@@ -1016,12 +1018,16 @@ function renderAdobe() {
     <div class="kpi-card ppc-en">
       <div class="kpi-label">PPC QBO BINs</div>
       <div class="kpi-value">${fmt(ppcBin)}</div>
-      <div class="kpi-deltas"><span class="delta flat"><span class="delta-label">Current week</span></span></div>
+      <div class="kpi-deltas">
+        ${deltaHtml(prevPpcBin ? wow(ppcBin, prevPpcBin) : null, "wow")}
+      </div>
     </div>
     <div class="kpi-card seo-qb">
-      <div class="kpi-label">SEO QBO BINs (est.)</div>
+      <div class="kpi-label">SEO QBO BINs</div>
       <div class="kpi-value">${fmt(seoBin)}</div>
-      <div class="kpi-deltas"><span class="delta flat" style="font-size:11px;color:var(--text-muted)">Holistic minus PPC</span></div>
+      <div class="kpi-deltas">
+        ${deltaHtml(prevSeoBin ? wow(seoBin, prevSeoBin) : null, "wow")}
+      </div>
     </div>
     <div class="kpi-card" style="border-top-color:#9b59b6;">
       <div class="kpi-label">Brand Intent</div>
