@@ -600,7 +600,7 @@ const QB_WORKFLOW  = { repo: "tamaral-tech/seo-kpi-weekly", workflow: "weekly_re
 // ── Formatting helpers ────────────────────────────────────────────────────────
 const fmt = n => n == null ? "—" : Number(n).toLocaleString();
 const fmtPct = (v, suffix="%") => v == null ? "—" : `${v > 0 ? "+" : ""}${v.toFixed(1)}${suffix}`;
-const fmtItpy = v => v == null ? "—" : `${v.toFixed(1)}%`;
+const fmtItpy = v => v == null ? "—" : `${v.toFixed(1)}`;
 const fmtMoney = v => v == null ? "—" : `$${Number(v).toLocaleString("en-CA", {minimumFractionDigits:0, maximumFractionDigits:0})}`;
 
 function deltaClass(v) {
@@ -626,7 +626,7 @@ function deltaHtml(v, mode="itpy") {
   const arrow = mode === "itpy"
     ? (v >= 100 ? "▲" : "▼")
     : (v >= 0   ? "▲" : "▼");
-  const display = mode === "itpy" ? `${v.toFixed(1)}%` : `${v > 0 ? "+" : ""}${v.toFixed(1)}%`;
+  const display = mode === "itpy" ? `${v.toFixed(1)}` : `${v > 0 ? "+" : ""}${v.toFixed(1)}%`;
   const color = cls.includes("up") ? "var(--positive)" : cls.includes("down") ? "var(--negative)" : "var(--neutral)";
   return `<span class="delta" style="color:${color}">${arrow} ${display} <span class="delta-label">${label}</span></span>`;
 }
@@ -867,7 +867,7 @@ function updateNarrative() {
     if (itpyVal == null) return `${name}: no data.`;
     const diff = itpyVal - sv;
     const dir = itpyVal > 100 ? "▲" : "▼";
-    const pct = `${itpyVal.toFixed(1)}% ITPY`;
+    const pct = `${itpyVal.toFixed(1)} ITPY`;
     if (Math.abs(diff) < 4) return `${name} (${pct}) is in line with volume.`;
     if (diff < 0) return `${name} (${pct}) is underperforming vs volume by ${Math.abs(diff).toFixed(1)}pp.`;
     return `${name} (${pct}) is outperforming volume by ${diff.toFixed(1)}pp.`;
@@ -1081,7 +1081,7 @@ function renderAdobe() {
           <div class="kpi-label">Last Year</div>
           <div class="kpi-value" style="font-size:24px;">${fmt(bi.itpy)}</div>
           <div class="delta" style="color:${bi.itpy_pct >= 100 ? "var(--positive)" : "var(--negative)"}">
-            ${bi.itpy_pct ? bi.itpy_pct.toFixed(1) + "% ITPY" : "—"}
+            ${bi.itpy_pct ? bi.itpy_pct.toFixed(1) + " ITPY" : "—"}
           </div>
         </div>
       </div>
