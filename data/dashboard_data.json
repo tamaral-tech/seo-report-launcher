@@ -1,6 +1,6 @@
 {
   "meta": {
-    "generated_at": "2026-05-04T23:40:29",
+    "generated_at": "2026-05-04T23:47:00",
     "fiscal_week": "FY26 W40",
     "week_start": "2026-04-26",
     "week_end": "2026-05-02",
@@ -591,14 +591,14 @@
         "ppc_fr": 4491,
         "seo_qb": 27641,
         "total": 52379,
-        "ppc_en_ly": 0,
+        "ppc_en_ly": 36419,
         "ppc_fr_ly": 4713,
-        "seo_qb_ly": 0,
-        "total_ly": 4713,
+        "seo_qb_ly": 23220,
+        "total_ly": 64352,
         "ppc_en_share": 38.7,
         "ppc_fr_share": 8.6,
         "seo_share": 52.8,
-        "total_itpy": null,
+        "total_itpy": 81.4,
         "search_volume_itpy": 92.9
       }
     ]
