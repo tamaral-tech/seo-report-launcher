@@ -523,6 +523,15 @@
       </div>
     </div>
 
+    <div class="chart-row single">
+      <div class="card">
+        <div class="card-title">Holistic Click Share ITPY vs Search Volume ITPY — Last 13 Weeks</div>
+        <div class="chart-container" style="height:260px;">
+          <canvas id="holisticItpyChart"></canvas>
+        </div>
+      </div>
+    </div>
+
     <div class="card">
       <div class="card-title">Weekly Detail</div>
       <div class="table-wrap">
@@ -647,7 +656,10 @@ function showTab(name) {
   if (charts["summaryChart"] && name === "summary") charts["summaryChart"].update();
   if (charts["ppcEnChart"] && name === "ppc")       { charts["ppcEnChart"].update(); charts["ppcFrChart"].update(); }
   if (charts["seoQbChart"] && name === "seo")       { charts["seoQbChart"].update(); charts["seoAcctsChart"].update(); }
-  if (charts["holisticStackedChart"] && name === "holistic") charts["holisticStackedChart"].update();
+  if (name === "holistic") {
+    if (charts["holisticStackedChart"]) charts["holisticStackedChart"].update();
+    if (charts["holisticItpyChart"])    charts["holisticItpyChart"].update();
+  }
   if (charts["adobeBinsChart"] && name === "adobe") charts["adobeBinsChart"].update();
 }
 
@@ -663,6 +675,8 @@ document.querySelectorAll(".nav-tab").forEach((btn, i) => {
 function makeLineChart(canvasId, labels, datasets, opts={}) {
   const ctx = document.getElementById(canvasId).getContext("2d");
   if (charts[canvasId]) charts[canvasId].destroy();
+  const labelFn = opts.tooltipLabel || (c => ` ${c.dataset.label}: ${fmt(c.parsed.y)}`);
+  const tickFn  = opts.tickFormat   || (v => fmt(v));
   charts[canvasId] = new Chart(ctx, {
     type: "line",
     data: { labels, datasets },
@@ -672,17 +686,13 @@ function makeLineChart(canvasId, labels, datasets, opts={}) {
       interaction: { mode: "index", intersect: false },
       plugins: {
         legend: { position: "top", labels: { boxWidth: 12, font: { size: 11 } } },
-        tooltip: {
-          callbacks: {
-            label: ctx => ` ${ctx.dataset.label}: ${fmt(ctx.parsed.y)}`
-          }
-        }
+        tooltip: { callbacks: { label: labelFn } }
       },
       scales: {
         x: { grid: { display: false }, ticks: { font: { size: 11 } } },
         y: {
           grid: { color: "#f0f0f0" },
-          ticks: { font: { size: 11 }, callback: v => fmt(v) },
+          ticks: { font: { size: 11 }, callback: tickFn },
           ...( opts.yMin !== undefined ? { min: opts.yMin } : {} )
         }
       },
@@ -958,6 +968,17 @@ function renderHolistic() {
     { label: "PPC FR", data: h.map(r => r.ppc_fr), backgroundColor: CSS("--ppc-fr") + "cc" },
     { label: "SEO QB", data: h.map(r => r.seo_qb), backgroundColor: CSS("--seo")    + "cc" },
   ]);
+
+  // ITPY comparison line chart
+  const baseline = h.map(() => 100);
+  makeLineChart("holisticItpyChart", labels, [
+    { label: "Holistic Click Share ITPY", data: h.map(r => r.total_itpy),          borderColor: CSS("--holistic"), backgroundColor: "transparent", tension: 0.3, pointRadius: 3, borderWidth: 2 },
+    { label: "Search Volume ITPY",        data: h.map(r => r.search_volume_itpy),  borderColor: "#e67e22",         backgroundColor: "transparent", tension: 0.3, pointRadius: 3, borderWidth: 2 },
+    { label: "Flat (100)",                data: baseline,                            borderColor: "#aaa",            backgroundColor: "transparent", borderDash: [4,4], pointRadius: 0, borderWidth: 1 },
+  ], {
+    tooltipLabel: c => c.dataset.label === "Flat (100)" ? null : ` ${c.dataset.label}: ${c.parsed.y != null ? c.parsed.y.toFixed(1) : "—"}`,
+    tickFormat:   v => v.toFixed(0),
+  });
 
   // Current-week share pills
   const last = h.at(-1) || {};
