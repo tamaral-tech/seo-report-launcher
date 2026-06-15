@@ -1,61 +1,13 @@
 {
   "meta": {
-    "generated_at": "2026-05-25T10:01:39",
-    "fiscal_week": "FY26 W43",
-    "week_start": "2026-05-17",
-    "week_end": "2026-05-23",
+    "generated_at": "2026-06-15T09:51:26",
+    "fiscal_week": "FY26 W46",
+    "week_start": "2026-06-07",
+    "week_end": "2026-06-13",
     "num_weeks": 13
   },
   "ppc": {
     "history": [
-      {
-        "week": "FY26 W31",
-        "en_clicks": 0,
-        "en_clicks_ly": 0,
-        "fr_clicks": 0,
-        "fr_clicks_ly": 0,
-        "en_impressions": 0,
-        "cost": 0,
-        "en_cpc": 0,
-        "qbo_bin": 0,
-        "qbse_bin": 0,
-        "en_itpy": null,
-        "fr_itpy": null,
-        "en_wow": null,
-        "fr_wow": null
-      },
-      {
-        "week": "FY26 W32",
-        "en_clicks": 51227,
-        "en_clicks_ly": 37522,
-        "fr_clicks": 5392,
-        "fr_clicks_ly": 4142,
-        "en_impressions": 126875,
-        "cost": 24877.67,
-        "en_cpc": 0.17,
-        "qbo_bin": 407,
-        "qbse_bin": 1,
-        "en_itpy": 136.5,
-        "fr_itpy": 130.2,
-        "en_wow": null,
-        "fr_wow": null
-      },
-      {
-        "week": "FY26 W33",
-        "en_clicks": 49294,
-        "en_clicks_ly": 37217,
-        "fr_clicks": 4247,
-        "fr_clicks_ly": 3567,
-        "en_impressions": 121097,
-        "cost": 29796.96,
-        "en_cpc": 0.22,
-        "qbo_bin": 480,
-        "qbse_bin": 4,
-        "en_itpy": 132.5,
-        "fr_itpy": 119.1,
-        "en_wow": -3.8,
-        "fr_wow": -21.2
-      },
       {
         "week": "FY26 W34",
         "en_clicks": 26429,
@@ -69,8 +21,8 @@
         "qbse_bin": 2,
         "en_itpy": 72.6,
         "fr_itpy": 123.9,
-        "en_wow": -46.4,
-        "fr_wow": 26.3
+        "en_wow": null,
+        "fr_wow": null
       },
       {
         "week": "FY26 W35",
@@ -215,50 +167,59 @@
         "fr_itpy": 109.4,
         "en_wow": -14.0,
         "fr_wow": -10.4
+      },
+      {
+        "week": "FY26 W44",
+        "en_clicks": 23050,
+        "en_clicks_ly": 35572,
+        "fr_clicks": 4033,
+        "fr_clicks_ly": 3184,
+        "en_impressions": 58529,
+        "cost": 12416.02,
+        "en_cpc": 0.45,
+        "qbo_bin": 288,
+        "qbse_bin": 0,
+        "en_itpy": 64.8,
+        "fr_itpy": 126.7,
+        "en_wow": 9.2,
+        "fr_wow": 19.1
+      },
+      {
+        "week": "FY26 W45",
+        "en_clicks": 24649,
+        "en_clicks_ly": 36798,
+        "fr_clicks": 3820,
+        "fr_clicks_ly": 3245,
+        "en_impressions": 63114,
+        "cost": 13821.41,
+        "en_cpc": 0.47,
+        "qbo_bin": 360,
+        "qbse_bin": 1,
+        "en_itpy": 67.0,
+        "fr_itpy": 117.7,
+        "en_wow": 6.9,
+        "fr_wow": -5.3
+      },
+      {
+        "week": "FY26 W46",
+        "en_clicks": 24087,
+        "en_clicks_ly": 36313,
+        "fr_clicks": 3637,
+        "fr_clicks_ly": 3162,
+        "en_impressions": 61244,
+        "cost": 12772.1,
+        "en_cpc": 0.44,
+        "qbo_bin": 335,
+        "qbse_bin": 0,
+        "en_itpy": 66.3,
+        "fr_itpy": 115.0,
+        "en_wow": -2.3,
+        "fr_wow": -4.8
       }
     ]
   },
   "seo": {
     "history": [
-      {
-        "week": "FY26 W31",
-        "qb_clicks": 0,
-        "qb_clicks_ly": 0,
-        "accts_clicks": 0,
-        "accts_clicks_ly": 0,
-        "qb_impressions": 0,
-        "accts_impressions": 0,
-        "qb_itpy": null,
-        "accts_itpy": null,
-        "qb_wow": null,
-        "accts_wow": null
-      },
-      {
-        "week": "FY26 W32",
-        "qb_clicks": 16703,
-        "qb_clicks_ly": 22832,
-        "accts_clicks": 365,
-        "accts_clicks_ly": 68,
-        "qb_impressions": 79702,
-        "accts_impressions": 34865,
-        "qb_itpy": 73.2,
-        "accts_itpy": 536.8,
-        "qb_wow": null,
-        "accts_wow": null
-      },
-      {
-        "week": "FY26 W33",
-        "qb_clicks": 13979,
-        "qb_clicks_ly": 22295,
-        "accts_clicks": 335,
-        "accts_clicks_ly": 52,
-        "qb_impressions": 75454,
-        "accts_impressions": 37367,
-        "qb_itpy": 62.7,
-        "accts_itpy": 644.2,
-        "qb_wow": -16.3,
-        "accts_wow": -8.2
-      },
       {
         "week": "FY26 W34",
         "qb_clicks": 24233,
@@ -269,8 +230,8 @@
         "accts_impressions": 35794,
         "qb_itpy": 107.1,
         "accts_itpy": 1197.9,
-        "qb_wow": 73.4,
-        "accts_wow": 71.6
+        "qb_wow": null,
+        "accts_wow": null
       },
       {
         "week": "FY26 W35",
@@ -388,59 +349,50 @@
         "accts_itpy": 173.1,
         "qb_wow": -13.0,
         "accts_wow": -15.7
+      },
+      {
+        "week": "FY26 W44",
+        "qb_clicks": 27016,
+        "qb_clicks_ly": 17349,
+        "accts_clicks": 627,
+        "accts_clicks_ly": 246,
+        "qb_impressions": 68786,
+        "accts_impressions": 31405,
+        "qb_itpy": 155.7,
+        "accts_itpy": 254.9,
+        "qb_wow": 11.6,
+        "accts_wow": -3.4
+      },
+      {
+        "week": "FY26 W45",
+        "qb_clicks": 28304,
+        "qb_clicks_ly": 17269,
+        "accts_clicks": 721,
+        "accts_clicks_ly": 417,
+        "qb_impressions": 71802,
+        "accts_impressions": 49334,
+        "qb_itpy": 163.9,
+        "accts_itpy": 172.9,
+        "qb_wow": 4.8,
+        "accts_wow": 15.0
+      },
+      {
+        "week": "FY26 W46",
+        "qb_clicks": 26176,
+        "qb_clicks_ly": 17718,
+        "accts_clicks": 661,
+        "accts_clicks_ly": 976,
+        "qb_impressions": 67634,
+        "accts_impressions": 36685,
+        "qb_itpy": 147.7,
+        "accts_itpy": 67.7,
+        "qb_wow": -7.5,
+        "accts_wow": -8.3
       }
     ]
   },
   "holistic": {
     "history": [
-      {
-        "week": "FY26 W31",
-        "ppc_en": 51765,
-        "ppc_fr": 4612,
-        "seo_qb": 15349,
-        "total": 71726,
-        "ppc_en_ly": 37350,
-        "ppc_fr_ly": 4536,
-        "seo_qb_ly": 24627,
-        "total_ly": 66513,
-        "ppc_en_share": 72.2,
-        "ppc_fr_share": 6.4,
-        "seo_share": 21.4,
-        "total_itpy": 107.8,
-        "search_volume_itpy": 94.0
-      },
-      {
-        "week": "FY26 W32",
-        "ppc_en": 49255,
-        "ppc_fr": 4025,
-        "seo_qb": 16703,
-        "total": 69983,
-        "ppc_en_ly": 37425,
-        "ppc_fr_ly": 4142,
-        "seo_qb_ly": 22832,
-        "total_ly": 64399,
-        "ppc_en_share": 70.4,
-        "ppc_fr_share": 5.8,
-        "seo_share": 23.9,
-        "total_itpy": 108.7,
-        "search_volume_itpy": 106.0
-      },
-      {
-        "week": "FY26 W33",
-        "ppc_en": 49294,
-        "ppc_fr": 4247,
-        "seo_qb": 13979,
-        "total": 67520,
-        "ppc_en_ly": 37217,
-        "ppc_fr_ly": 4605,
-        "seo_qb_ly": 22295,
-        "total_ly": 64117,
-        "ppc_en_share": 73.0,
-        "ppc_fr_share": 6.3,
-        "seo_share": 20.7,
-        "total_itpy": 105.3,
-        "search_volume_itpy": 92.3
-      },
       {
         "week": "FY26 W34",
         "ppc_en": 26429,
@@ -600,35 +552,59 @@
         "seo_share": 49.7,
         "total_itpy": 90.6,
         "search_volume_itpy": null
+      },
+      {
+        "week": "FY26 W44",
+        "ppc_en": 23050,
+        "ppc_fr": 4033,
+        "seo_qb": 27016,
+        "total": 54099,
+        "ppc_en_ly": 0,
+        "ppc_fr_ly": 4049,
+        "seo_qb_ly": 0,
+        "total_ly": 4049,
+        "ppc_en_share": 42.6,
+        "ppc_fr_share": 7.5,
+        "seo_share": 49.9,
+        "total_itpy": null,
+        "search_volume_itpy": null
+      },
+      {
+        "week": "FY26 W45",
+        "ppc_en": 24649,
+        "ppc_fr": 3820,
+        "seo_qb": 28304,
+        "total": 56773,
+        "ppc_en_ly": 0,
+        "ppc_fr_ly": 4160,
+        "seo_qb_ly": 0,
+        "total_ly": 4160,
+        "ppc_en_share": 43.4,
+        "ppc_fr_share": 6.7,
+        "seo_share": 49.9,
+        "total_itpy": null,
+        "search_volume_itpy": null
+      },
+      {
+        "week": "FY26 W46",
+        "ppc_en": 24087,
+        "ppc_fr": 3637,
+        "seo_qb": 26176,
+        "total": 53900,
+        "ppc_en_ly": 0,
+        "ppc_fr_ly": 4123,
+        "seo_qb_ly": 0,
+        "total_ly": 4123,
+        "ppc_en_share": 44.7,
+        "ppc_fr_share": 6.7,
+        "seo_share": 48.6,
+        "total_itpy": null,
+        "search_volume_itpy": null
       }
     ]
   },
   "adobe": {
     "holistic_history": [
-      {
-        "week": "FY26 W31",
-        "week_start": "2026-02-22",
-        "qb_signups": 272,
-        "qbo_bin": 245,
-        "qbo_bin_ppc": 1189,
-        "qbo_bin_seo": 375
-      },
-      {
-        "week": "FY26 W32",
-        "week_start": "2026-03-01",
-        "qb_signups": 249,
-        "qbo_bin": 222,
-        "qbo_bin_ppc": 1111,
-        "qbo_bin_seo": 402
-      },
-      {
-        "week": "FY26 W33",
-        "week_start": "2026-03-08",
-        "qb_signups": 290,
-        "qbo_bin": 277,
-        "qbo_bin_ppc": 1378,
-        "qbo_bin_seo": 374
-      },
       {
         "week": "FY26 W34",
         "week_start": "2026-03-15",
@@ -706,71 +682,95 @@
         "week_start": "2026-05-17",
         "qb_signups": 245,
         "qbo_bin": 231,
-        "qbo_bin_ppc": 877,
+        "qbo_bin_ppc": 878,
         "qbo_bin_seo": 414
+      },
+      {
+        "week": "FY26 W44",
+        "week_start": "2026-05-24",
+        "qb_signups": 240,
+        "qbo_bin": 212,
+        "qbo_bin_ppc": 957,
+        "qbo_bin_seo": 482
+      },
+      {
+        "week": "FY26 W45",
+        "week_start": "2026-05-31",
+        "qb_signups": 267,
+        "qbo_bin": 248,
+        "qbo_bin_ppc": 951,
+        "qbo_bin_seo": 454
+      },
+      {
+        "week": "FY26 W46",
+        "week_start": "2026-06-07",
+        "qb_signups": 232,
+        "qbo_bin": 222,
+        "qbo_bin_ppc": 889,
+        "qbo_bin_seo": 394
       }
     ],
     "match_types": {
       "rows": [
         {
           "label": "ECS: PPC Brand",
-          "unique_visitors": 14064,
-          "qb_signups": 867,
-          "qb_bin": 801,
-          "qbo_bin": 800,
-          "qb_trial": 66
+          "unique_visitors": 14052,
+          "qb_signups": 852,
+          "qb_bin": 805,
+          "qbo_bin": 803,
+          "qb_trial": 47
         },
         {
           "label": "ECS: PPC NonBrand",
-          "unique_visitors": 2865,
-          "qb_signups": 41,
-          "qb_bin": 37,
-          "qbo_bin": 35,
-          "qb_trial": 4
+          "unique_visitors": 2614,
+          "qb_signups": 50,
+          "qb_bin": 49,
+          "qbo_bin": 48,
+          "qb_trial": 1
         },
         {
           "label": "ECS: PPC Payroll",
-          "unique_visitors": 1955,
-          "qb_signups": 30,
-          "qb_bin": 28,
-          "qbo_bin": 28,
+          "unique_visitors": 1654,
+          "qb_signups": 22,
+          "qb_bin": 20,
+          "qbo_bin": 20,
           "qb_trial": 2
         },
         {
           "label": "ECS: PPC PMax",
-          "unique_visitors": 204,
-          "qb_signups": 5,
-          "qb_bin": 5,
-          "qbo_bin": 5,
+          "unique_visitors": 127,
+          "qb_signups": 4,
+          "qb_bin": 4,
+          "qbo_bin": 4,
           "qb_trial": 0
         },
         {
           "label": "ECS: PPC Shopping",
-          "unique_visitors": 1080,
-          "qb_signups": 24,
-          "qb_bin": 23,
-          "qbo_bin": 20,
+          "unique_visitors": 1363,
+          "qb_signups": 26,
+          "qb_bin": 25,
+          "qbo_bin": 21,
           "qb_trial": 1
         },
         {
           "label": "ECS: PPC Payments",
-          "unique_visitors": 170,
-          "qb_signups": 0,
-          "qb_bin": 0,
-          "qbo_bin": 0,
-          "qb_trial": 0
-        },
-        {
-          "label": "ECS: PPC DSA",
-          "unique_visitors": 48,
+          "unique_visitors": 178,
           "qb_signups": 1,
           "qb_bin": 1,
           "qbo_bin": 1,
           "qb_trial": 0
         },
         {
+          "label": "ECS: PPC DSA",
+          "unique_visitors": 41,
+          "qb_signups": 0,
+          "qb_bin": 0,
+          "qbo_bin": 0,
+          "qb_trial": 0
+        },
+        {
           "label": "ECS: PPC ToF",
-          "unique_visitors": 2,
+          "unique_visitors": 4,
           "qb_signups": 0,
           "qb_bin": 0,
           "qbo_bin": 0,
@@ -778,20 +778,20 @@
         }
       ],
       "total": {
-        "unique_visitors": 20388,
-        "qb_signups": 968,
-        "qb_bin": 895,
-        "qbo_bin": 889,
-        "qb_trial": 73
+        "unique_visitors": 20033,
+        "qb_signups": 955,
+        "qb_bin": 904,
+        "qbo_bin": 897,
+        "qb_trial": 51
       }
     },
     "brand_intent": {
-      "week_start": "2026-05-17",
-      "current": 23938,
-      "prior_week": 26818,
-      "itpy": 25655,
-      "itpw_pct": 89.3,
-      "itpy_pct": 93.3
+      "week_start": "2026-06-07",
+      "current": 23218,
+      "prior_week": 24369,
+      "itpy": 26170,
+      "itpw_pct": 95.3,
+      "itpy_pct": 88.7
     }
   }
 }
